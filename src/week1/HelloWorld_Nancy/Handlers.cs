@@ -6,7 +6,7 @@ namespace HelloWorld_Nancy
 	{
 		public Handlers()
 		{
-			Get["/"] = _ => "Hello from Nancy";
+			Get["/"] = _ => View["Hello.html", new { Name = "Nancy's Super Simple View Engine" }];
 		}
 	}
 }
