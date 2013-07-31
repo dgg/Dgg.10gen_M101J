@@ -65,6 +65,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BsonExtensions.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,8 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using System.Linq.Expressions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Nancy;
 
@@ -17,8 +21,7 @@ namespace HelloWorld_Nancy
 					.GetCollection("hello");
 
 				BsonDocument document = collection.FindOne();
-				// mongo does not support dynamic, we resort to map to anonymous objects ourselves
-				return View["Hello.html", new { Name = document["Name"].AsString }];
+				return View["Hello.html", document.AsDinamicDictionary()];
 			};
 		}
 	}
