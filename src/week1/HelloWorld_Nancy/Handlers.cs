@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Linq.Expressions;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using Nancy;
 
@@ -22,6 +18,22 @@ namespace HelloWorld_Nancy
 
 				BsonDocument document = collection.FindOne();
 				return View["Hello.html", document.AsDinamicDictionary()];
+			};
+
+			Get["/fruits"] = _ =>
+			{
+				var fruits = new[] { "apple", "orange", "banana", "peach" };
+
+				return View["Fruits.html", fruits];
+			};
+
+			Post["/favorite-fruit"] = _ =>
+			{
+				DynamicDictionaryValue fruit = Request.Form.fruit;
+				string message = fruit.HasValue ? 
+					string.Format("your favorite fruits is {0}", fruit.Value) :
+					"Please, select a fruit";
+				return View["FavoriteFruit.html", message];
 			};
 		}
 	}

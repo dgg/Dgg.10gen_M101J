@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Fruit Picker</title>
+</head>
+<body>
+	<form action="/favorite-fruit" method="POST">
+		<p>What is your favorite fruit?</p>
+		<ul>
+			@Each.Model
+			<li>
+				<label><input type="radio" name="fruit" value="@Current" />@Current</label>
+			</li>
+			@EndEach
+		</ul>
+		<input type="submit" value="Submit"/>
+	</form>
+</body>
+</html>
