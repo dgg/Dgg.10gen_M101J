@@ -75,7 +75,7 @@ MongoCollection people = new MongoClient()
 		andrew.Dump(2);
 		people.Insert(andrew);
 		andrew.Dump(2);
-		andrew.Remove("id");
+		andrew.Remove("_id");
 		andrew.Dump(2);
 		people.Insert(andrew);
 	}
@@ -85,4 +85,3 @@ MongoCollection people = new MongoClient()
 	}
 */
 // Yes, because the removeField call will remove the _id key added by the driver in the first insert
-// But in reality no, because the C# driver does not allow removing the _id
