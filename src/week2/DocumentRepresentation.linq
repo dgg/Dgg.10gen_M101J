@@ -37,5 +37,7 @@ doc
 doc.Set("age", 35);
 doc["age"] = 36;
 
+doc.Add("languages", new BsonArray{"Java", "C#", "C++"});
+
 doc.Dump(2);
 
