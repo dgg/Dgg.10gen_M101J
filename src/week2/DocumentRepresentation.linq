@@ -37,7 +37,17 @@ doc
 doc.Set("age", 35);
 doc["age"] = 36;
 
+// arrays
 doc.Add("languages", new BsonArray{"Java", "C#", "C++"});
+
+
+// subdocuments
+doc.Add("address", new BsonDocument
+{
+	{"street", "20 Main"},
+	{"town", "Westfield"},
+	{"zip", "5678"}
+});
 
 doc.Dump(2);
 
