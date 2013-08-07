@@ -16,5 +16,7 @@ db.people.find({name : {$regex : "e$"}});
 // people whose name starts with the letter "A"
 db.people.find({name : {$regex : "^A"}});
 
-//Write a query that retrieves documents from a users collection where the name has a "q" in it, and the document has an email field.
-db.users.find({name : {$regex : "q"}, email: {$exists : true}});
+/*
+Write a query that retrieves documents from a users collection where the name has a "q" in it, and the document has an email field.
+*/
+//db.users.find({name : {$regex : "q"}, email: {$exists : true}});

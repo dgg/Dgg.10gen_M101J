@@ -9,5 +9,7 @@ db.users.find({email : { work : "richard@10gen.com"}});
 // found
 db.users.find({"email.work" : "richard@10gen.com"});
 
-//Write a query that finds all products that cost more than 10,000 and that have a rating of 5 or better.
-db.catalog.find({price : {$gt : 10000}, "reviews.rating" : {$gte: 5}})
+/*
+Write a query that finds all products that cost more than 10,000 and that have a rating of 5 or better.
+*/
+//db.catalog.find({price : {$gt : 10000}, "reviews.rating" : {$gte: 5}})

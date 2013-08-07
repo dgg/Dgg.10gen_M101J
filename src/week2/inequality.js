@@ -13,6 +13,8 @@ db.people.insert({name: 42});
 // there is no way that {name: 42} will be returned from a query that compares strings
 db.people.find({name : {$lt : "D"}});
 
-// Which of the following will find all users with name between "F" and "Q"?
-db.users.find( { name : { $gte : "F" , $lte : "Q" } } );
-db.users.find( { name : { $lte : "Q" , $gte : "F" } } );
+/*
+Which of the following will find all users with name between "F" and "Q"?
+*/
+//db.users.find( { name : { $gte : "F" , $lte : "Q" } } );
+//db.users.find( { name : { $lte : "Q" , $gte : "F" } } );
