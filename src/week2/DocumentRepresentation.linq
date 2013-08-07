@@ -51,3 +51,15 @@ doc.Add("address", new BsonDocument
 
 doc.Dump(2);
 
+/*
+How would you create a document using the Java driver with this JSON structure:
+
+{
+   "_id" : "user1",
+   "interests" : [ "basketball", "drumming"]
+}
+*/
+doc = new BsonDocument("_id", "user1")
+	.Add("interests", new BsonArray{"basketball", "drumming"});
+
+doc.ToString().Dump();
