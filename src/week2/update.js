@@ -65,3 +65,18 @@ db.friends.update( { _id : "Mike" }, { $pushAll: { interests : [ "skydiving" , "
 //{ _id : "Mike", interests : [ "botany", "skydiving" ] }
 //{ _id : "Mike", interests : [ "botany", "skydiving" ] }
 //-->{ _id : "Mike", interests : [ "botany", "skydiving", "skydiving", "skiing" ] }
+
+// multi-document update to add a title
+db.people.update({}, {$set : {title : "Dr"}}, {multi : true});
+
+/*
+Recall the schema of the scores collection:
+{
+	"_id" : ObjectId("50844162cb4cf4564b4694f8"),
+	"student" : 0,
+	"type" : "exam",
+	"score" : 75
+}
+How would you give every record whose score was less than 70 an extra 20 points?
+*/
+// db.scores.update({score : {$lt : 70}}, {$inc : {score: 20}}, {multi: true})
