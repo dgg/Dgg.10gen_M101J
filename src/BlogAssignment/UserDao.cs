@@ -20,7 +20,6 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 		public bool AddUser(string username, string password, string email)
 		{
-			return false;
 			string hashedPassword = hash(password, _random.Next().ToString(CultureInfo.InvariantCulture));
 
 			// XXX WORK HERE
@@ -28,7 +27,6 @@ namespace Dgg.tengen_M101J.BlogAssignment
 			// be sure to add username and hashed password to the document. problem instructions
 			// will tell you the schema that the documents must follow.
 			var user = new User(username, hashedPassword);
-
 
 			if (!string.IsNullOrEmpty(email))
 			{
