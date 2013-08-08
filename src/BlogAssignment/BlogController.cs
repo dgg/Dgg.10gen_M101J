@@ -43,11 +43,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 			Get["/welcome"] = _ =>
 			{
-				// cookie gets encoded
-				string sessionId;
-				Request.Cookies.TryGetValue("session", out sessionId);
-				sessionId = System.Web.HttpUtility.UrlDecode(sessionId);
-
+				string sessionId = extractSessionId(Request);
 				string username = sessions.FindUsernameBySessionId(sessionId);
 
 				// there is no session
@@ -73,6 +69,31 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				login.login_error = "invalid login";
 				return View["login.html", login];
 			};
+
+			Get["/logout"] = _ =>
+			{
+				string sessionId = extractSessionId(Request);
+				// there is no session
+				if (string.IsNullOrEmpty(sessionId))
+				{
+					return Response.AsRedirect("/signup");
+				}
+				else
+				{
+					sessions.EndSession(sessionId);
+					// removes cookie
+					return Response.AsRedirect("/login").AddCookie("session", sessionId, DateTime.MinValue);
+				}
+			};
+		}
+
+		private static string extractSessionId(Request request)
+		{
+			// cookie gets encoded
+			string sessionId;
+			request.Cookies.TryGetValue("session", out sessionId);
+			sessionId = System.Web.HttpUtility.UrlDecode(sessionId);
+			return sessionId;
 		}
 
 		private bool validateSignup(Signup signup)
