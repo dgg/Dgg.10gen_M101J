@@ -16,7 +16,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 		public string FindUsernameBySessionId(string sessionId)
 		{
-			BsonDocument session = _sessions.FindOneById(sessionId);
+			BsonDocument session = _sessions.FindOneById(sessionId ?? string.Empty);
 			return session == null ? null : session["username"].AsString;
 		}
 

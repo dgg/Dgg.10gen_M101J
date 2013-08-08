@@ -40,12 +40,27 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				return View["signup.html", signup];
 			};
 
-			Get["/welcome"] = _ => View["welcome.html", new {username = "yo!"}];
+			Get["/welcome"] = _ =>
+			{
+				// cookie gets encoded
+				string sessionId;
+				Request.Cookies.TryGetValue("session", out sessionId);
+				sessionId = System.Web.HttpUtility.UrlDecode(sessionId);
+
+				string username = sessions.FindUsernameBySessionId(sessionId);
+
+				// there is no session
+				if (string.IsNullOrEmpty(sessionId))
+				{
+					return Response.AsRedirect("/signup");
+				}
+				return View["welcome.html", new { username }];
+			};
 		}
 
 		private bool validateSignup(Models.Signup signup)
 		{
-			Regex userValidator =  new Regex("^[a-zA-Z0-9_-]{3,20}$", RegexOptions.Compiled),
+			Regex userValidator = new Regex("^[a-zA-Z0-9_-]{3,20}$", RegexOptions.Compiled),
 				passwordValidator = new Regex("^.{3,20}$", RegexOptions.Compiled),
 				emailValidator = new Regex("^[\\S]+@[\\S]+\\.[\\S]+$", RegexOptions.Compiled);
 			bool valid = false;
