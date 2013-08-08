@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Login</title>
+	<style type="text/css">
+		.label {
+			text-align: right;
+		}
+
+		.error {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<p>Need to Create an account? <a href="/signup">Signup</a></p>
+	<h2>Login</h2>
+	<form method="post">
+		<table>
+			<tr>
+				<td class="label">Username</td>
+				<td>
+					<input type="text" name="username" value="@Model.username">
+				</td>
+				<td class="error"></td>
+			</tr>
+			<tr>
+				<td class="label">Password</td>
+				<td>
+					<input type="password" name="password" value="" />
+				</td>
+				<td class="error">@Model.login_error</td>
+			</tr>
+		</table>
+		<input type="submit" value="Submit" />
+	</form>
+</body>
+</html>

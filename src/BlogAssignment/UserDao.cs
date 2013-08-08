@@ -4,17 +4,18 @@ using System.Security.Cryptography;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 
 namespace Dgg.tengen_M101J.BlogAssignment
 {
 	public class UserDao
 	{
-		private readonly MongoCollection<BsonDocument> _users;
+		private readonly MongoCollection<User> _users;
 		private readonly Random _random;
 
 		public UserDao(MongoDatabase db)
 		{
-			_users = db.GetCollection("users");
+			_users = db.GetCollection<User>("users");
 			_random = new Random();
 		}
 
@@ -47,6 +48,23 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				Console.Error.Write("Username already in use: {0}", username);
 				return false;
 			}
+		}
+
+		public User ValidateUser(string username, string password)
+		{
+			// XXX look in the user collection for a user that has this username
+			// assign the result to the user variable.
+			User user = _users.FindOne(Query<User>.EQ(u => u.Id, username));
+			if (user == null) return null;
+
+			string hashedAndSalted = user.Password;
+			string salt = hashedAndSalted.Split(',')[1];
+
+			if (!StringComparer.Ordinal.Equals(hashedAndSalted, hash(password, salt)))
+			{
+				return null;
+			}
+			return user;
 		}
 
 		private string hash(string password, string salt)

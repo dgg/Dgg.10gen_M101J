@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Dgg.tengen_M101J.BlogAssignment.Models;
 using MongoDB.Driver;
 using Nancy;
 using Nancy.ModelBinding;
@@ -19,10 +20,10 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 			Get["/"] = _ => View["blog_template.html"];
 
-			Get["/signup"] = _ => View["signup.html", new Models.Signup()];
+			Get["/signup"] = _ => View["signup.html", new Signup()];
 			Post["/signup"] = _ =>
 			{
-				var signup = this.Bind<Models.Signup>();
+				var signup = this.Bind<Signup>();
 				if (validateSignup(signup))
 				{
 					// good user
@@ -56,9 +57,25 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				}
 				return View["welcome.html", new { username }];
 			};
+
+			Get["/login"] = _ => View["login.html", new Login()];
+			Post["/login"] = _ =>
+			{
+				var login = this.Bind<Login>();
+				User user = users.ValidateUser(login.username, login.password);
+				if (user != null)
+				{
+					string sessionId = sessions.StartSession(user.Id);
+					if (string.IsNullOrEmpty(sessionId)) throw new Exception("catastrofic error");
+
+					return Response.AsRedirect("/welcome").AddCookie("session", sessionId);
+				}
+				login.login_error = "invalid login";
+				return View["login.html", login];
+			};
 		}
 
-		private bool validateSignup(Models.Signup signup)
+		private bool validateSignup(Signup signup)
 		{
 			Regex userValidator = new Regex("^[a-zA-Z0-9_-]{3,20}$", RegexOptions.Compiled),
 				passwordValidator = new Regex("^.{3,20}$", RegexOptions.Compiled),
