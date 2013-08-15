@@ -124,6 +124,28 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				};
 				return View["new_post.html", model];
 			};
+			Post["newpost"] = _ =>
+			{
+				string username = extractUsername(sessions, Request);
+				if (string.IsNullOrEmpty(username)) return Response.AsRedirect("/login");
+
+				var model = this.Bind<NewPost>();
+				if (string.IsNullOrEmpty(model.subject) || string.IsNullOrEmpty(model.body))
+				{
+					model.errors = "post must contain a title and blog entry.";
+					model.username = username;
+
+					return View["new_post.html", model];
+				}
+				else
+				{
+					string[] tags = (model.tags ?? string.Empty).Split(',');
+					string permalink = posts.AddPost(model.subject, model.body.Replace("\n", "<br/>"), tags, username);
+
+					return Response.AsRedirect("/posts/" + permalink);
+				}
+			};
+
 		}
 
 		private static string extractUsername(SessionDao sessions, Request request)
