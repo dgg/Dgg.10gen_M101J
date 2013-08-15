@@ -2,10 +2,8 @@
 
 namespace Dgg.tengen_M101J.BlogAssignment.Models
 {
-	public class Home
+	public class Home : Authenticated
 	{
-		public bool isLoggedIn { get; set; }
-		public string username { get; set; }
 		public IEnumerable<Post> myPosts { get; set; }
 	}
 }

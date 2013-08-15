@@ -21,14 +21,12 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 			Get["/"] = _ =>
 			{
-				string sessionId = extractSessionId(Request);
-				string username = sessions.FindUsernameBySessionId(sessionId);
+				string username = extractUsername(sessions, Request);
 
 				var latestPosts = posts.FindByDateDescending(10);
 				var model = new Home
 				{
 					username = username,
-					isLoggedIn = !string.IsNullOrEmpty(username),
 					myPosts = latestPosts
 				};
 				return View["blog_template.html", model];
@@ -99,6 +97,40 @@ namespace Dgg.tengen_M101J.BlogAssignment
 					return Response.AsRedirect("/login").AddCookie("session", sessionId, DateTime.MinValue);
 				}
 			};
+
+			Get["/posts/{permalink}"] = args =>
+			{
+				string permalink = args.permalink;
+
+				Post post = posts.Get(permalink);
+				if (post == null) return Response.AsRedirect("/post_not_found");
+
+				string username = extractUsername(sessions, Request);
+				var model = new Entry
+				{
+					username = username,
+					post = post
+				};
+				return View["entry_template.html", model];
+			};
+
+			Get["newpost"] = _ =>
+			{
+				string username = extractUsername(sessions, Request);
+				if (string.IsNullOrEmpty(username)) return Response.AsRedirect("/login");
+				var model = new NewPost
+				{
+					username = username
+				};
+				return View["new_post.html", model];
+			};
+		}
+
+		private static string extractUsername(SessionDao sessions, Request request)
+		{
+			string sessionId = extractSessionId(request);
+			string username = sessions.FindUsernameBySessionId(sessionId);
+			return username;
 		}
 
 		private static string extractSessionId(Request request)

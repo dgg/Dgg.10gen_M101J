@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Create a new post</title>
+</head>
+<body>
+	<p>Welcome @Model.username <a href="/logout">Logout</a> | <a href="/">Blog Home</a></p>
+	<form action="/newpost" method="POST">
+		@Model.errors
+		<h2>Title</h2>
+		<input type="text" name="subject" size="120" value="@Model.subject"/><br/>
+		<h2>Blog Entry</h2>
+		<textarea name="body" cols="120" rows="20">@Model.body</textarea><br/>
+		<h2>Tags</h2>
+		Comma separated, please<br/>
+		<input type="text" name="tags" size="120" value="@Model.tags"/><br/>
+		<p><input type="submit" value="Submit" /></p>
+	</form>
+</body>
+</html>

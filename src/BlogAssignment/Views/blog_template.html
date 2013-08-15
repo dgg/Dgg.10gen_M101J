@@ -4,12 +4,10 @@
 	<title>My Blog</title>
 </head>
 	<body>
-		@If.isLoggedIn
-			<p>Welcome @Model.username <a href="/logout">Logout</a> | <a href="/newpost">New Post</a></p>
-		@EndIf
+		@Partial['_authenticated.html']
 		<h1>My Blog</h1>
 		@Each.myPosts
-		<h2><a href="/post/@Current.Permalink">@Current.Title</a></h2>
+		<h2><a href="/posts/@Current.Permalink">@Current.Title</a></h2>
 		Posted @Current.Date <i>By @Current.Author</i><br />
 		Comments: @If.HasComments @Current.Comments.Length @EndIf @IfNot.HasComments 0 @EndIf
 		<hr />

@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Blog Post</title>
+</head>
+	<body>
+		@Partial['_authenticated.html']
+		<a href="/">Blog Home</a><br/><br/>
+		<h2>@Model.post.Title</h2>
+		Posted @Model.post.Date<i> By @Model.post.Author</i><br/>
+		<hr/>
+		<p>@Model.post.Body</p>
+		<p><em>Filed Under</em>: @Model.post.AllTags</p>
+		<p>Comments: @If.HasComments @Current.Comments.Length @EndIf @IfNot.HasComments 0 @EndIf</p>
+		<ul>
+			@Each.post.Comments
+			<li>
+				Author: @Current.Author<br/><br/>
+				@Current.Body<br/><hr/>
+			</li>
+			@EndEach
+		</ul>
+		<h3>Add a comment</h3>
+		<form action="/newcomment" method="POST">
+			
+		</form>
+	</body>
+</html>
