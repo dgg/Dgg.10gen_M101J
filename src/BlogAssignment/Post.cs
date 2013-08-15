@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Dgg.tengen_M101J.BlogAssignment
 {
@@ -15,7 +16,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 			Permalink = calculatePermaLink(title);
 			Comments = new Comment[0];
-			Date = DateTimeOffset.UtcNow;
+			Date = DateTime.UtcNow;
 		}
 
 		public ObjectId Id { get; set; }
@@ -25,7 +26,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 		public string Permalink { get; private set; }
 		public string[] Tags { get; set; }
 		public Comment[] Comments { get; set; }
-		public DateTimeOffset Date { get; set; }
+		public DateTime Date { get; set; }
 
 		private static string calculatePermaLink(string title)
 		{
@@ -33,6 +34,12 @@ namespace Dgg.tengen_M101J.BlogAssignment
 			permalink = Regex.Replace(permalink, "\\W", string.Empty, RegexOptions.Compiled);
 			permalink = permalink.ToLower();
 			return permalink;
+		}
+
+		[BsonIgnore]
+		public string AllTags
+		{
+			get { return string.Join(", ", Tags); }
 		}
 	}
 }
