@@ -17,8 +17,22 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 			var users = new UserDao(db);
 			var sessions = new SessionDao(db);
+			var posts = new PostDao(db);
 
-			Get["/"] = _ => View["blog_template.html"];
+			Get["/"] = _ =>
+			{
+				string sessionId = extractSessionId(Request);
+				string username = sessions.FindUsernameBySessionId(sessionId);
+
+				var latestPosts = posts.FindByDateDescending(10);
+				var model = new Home
+				{
+					username = username,
+					isLoggedIn = !string.IsNullOrEmpty(username),
+					myPosts = latestPosts
+				};
+				return View["blog_template.html", model];
+			};
 
 			Get["/signup"] = _ => View["signup.html", new Signup()];
 			Post["/signup"] = _ =>

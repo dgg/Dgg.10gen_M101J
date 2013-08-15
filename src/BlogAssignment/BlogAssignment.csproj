@@ -68,8 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogController.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="Models\Home.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Signup.cs" />
+    <Compile Include="Post.cs" />
+    <Compile Include="PostDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionDao.cs" />
     <Compile Include="User.cs" />

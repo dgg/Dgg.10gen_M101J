@@ -3,7 +3,10 @@
 <head>
 	<title>My Blog</title>
 </head>
-<body>
-	This is a placeholder for the blog
-</body>
+	<body>
+		@If.isLoggedIn
+			<p>Welcome @Model.username <a href="/logout">Logout</a> | <a href="/newpost">New Post</a></p>
+		@EndIf
+		<h1>My Blog</h1>
+	</body>
 </html>
