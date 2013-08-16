@@ -41,5 +41,11 @@ namespace Dgg.tengen_M101J.BlogAssignment
 		{
 			get { return string.Join(", ", Tags); }
 		}
+
+		private Post() { }
+		public static Post Empty()
+		{
+			return new Post();
+		}
 	}
 }

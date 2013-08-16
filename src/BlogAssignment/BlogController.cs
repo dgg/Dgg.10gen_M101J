@@ -146,6 +146,23 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				}
 			};
 
+			Post["/newcomment"] = _ =>
+			{
+				var model = this.Bind<NewComment>();
+
+				Post post = posts.Get(model.permalink);
+				if (post == null) return Response.AsRedirect("/post_not_found");
+
+				if (string.IsNullOrEmpty(model.name) || string.IsNullOrEmpty(model.body))
+				{
+					model.errors = "Post must contain your name and an actual comment";
+					var entry = new Entry { post = post, comment = model };
+					return View["entry_template.html", entry];
+				}
+				
+				posts.AddComment(model.name, model.email, model.body, model.permalink);
+				return Response.AsRedirect("/posts/" + model.permalink);
+			};
 		}
 
 		private static string extractUsername(SessionDao sessions, Request request)

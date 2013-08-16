@@ -76,6 +76,7 @@
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\Home.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\NewComment.cs" />
     <Compile Include="Models\NewPost.cs" />
     <Compile Include="Models\Signup.cs" />
     <Compile Include="Post.cs" />
