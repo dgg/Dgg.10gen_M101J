@@ -64,6 +64,7 @@
     <Content Include="Views\entry_template.html" />
     <Content Include="Views\login.html" />
     <Content Include="Views\new_post.html" />
+    <Content Include="Views\post_not_found.html" />
     <Content Include="Views\signup.html" />
     <Content Include="Views\welcome.html" />
     <Content Include="Views\_authenticated.html" />

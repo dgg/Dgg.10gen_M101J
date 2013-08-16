@@ -163,6 +163,8 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				posts.AddComment(model.name, model.email, model.body, model.permalink);
 				return Response.AsRedirect("/posts/" + model.permalink);
 			};
+
+			Get["post_not_found"] = _ => View["post_not_found.html"];
 		}
 
 		private static string extractUsername(SessionDao sessions, Request request)
