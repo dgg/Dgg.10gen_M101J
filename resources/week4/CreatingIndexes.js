@@ -22,3 +22,16 @@ db.system.indexes.find();
 
 // discover the indexes in a collection
 db.students.getIndexes();
+
+/*
+Suppose we have a collection foo that has an index created as follows:
+
+db.foo.ensureIndex({a:1, b:1})
+
+Which of the following inserts are valid to this collection?
+*/
+
+// db.foo.insert({a:["apples","oranges"], b:"grapes"})
+// db.foo.insert({a:"grapes", b:"oranges"})
+// db.foo.insert({a:"grapes", b:[8,9,10]})
+// NOT VALID: db.foo.insert({a:[1,2,3], b:[5,6,7]}) bcause there is an index defined on two array properties
