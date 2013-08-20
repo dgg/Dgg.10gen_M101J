@@ -16,3 +16,9 @@ having the index key be class, student_name.
 */
 
 // db.students.ensureIndex({class : 1, student_name : 1})
+
+// discover the indexes in the database
+db.system.indexes.find();
+
+// discover the indexes in a collection
+db.students.getIndexes();
