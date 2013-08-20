@@ -16,3 +16,6 @@ Write a query that will find the closest three places (the closest three documen
 to the location 74, 140.
 */
 // db.places.find({location : {$near: [74, 140]}}).limit(3)
+
+// location now is interpreted as long, lat
+db.runCommand({geoNear: 'stores', near : [50, 50], spherical : true, maxDitance : 1 /* rad*/});
