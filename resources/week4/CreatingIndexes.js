@@ -35,3 +35,28 @@ Which of the following inserts are valid to this collection?
 // db.foo.insert({a:"grapes", b:"oranges"})
 // db.foo.insert({a:"grapes", b:[8,9,10]})
 // NOT VALID: db.foo.insert({a:[1,2,3], b:[5,6,7]}) bcause there is an index defined on two array properties
+
+db.people.insert({name : 'Tim Johnson', addresses : [
+{
+street_address: '23 Sycamore',
+city : 'New York',
+state: 'New York',
+tag: 'vacation',
+phones : [1, 2, 3, 4]
+},
+{
+street_address: '23 Sycamore',
+city : 'New York',
+state: 'New York',
+tag: 'vacation'
+},
+{
+street_address: '23 Sycamore',
+city : 'New York',
+state: 'New York',
+tag: 'vacation'
+}
+]});
+
+db.people.ensureIndex({'addresses.tag' : 1});
+db.people.ensureIndex({'addresses.phones' : 1});
