@@ -2,15 +2,16 @@
 {
 	public class Comment
 	{
-		public string Name { get; private set; }
+		public string Author { get; private set; }
 		public string Body { get; private set; }
 
-		public Comment(string name, string body)
+		public Comment(string name, string author)
 		{
-			Name = name;
-			Body = body;
+			Author = name;
+			Body = author;
 		}
 
 		public string Email { get; set; }
+		public int num_likes { get; set; }
 	}
 }
