@@ -17,14 +17,21 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 		public Post Get(string permalink)
 		{
-			return _posts.FindOne(Query<Post>.EQ(p => p.Permalink, permalink));
+			_posts.EnsureIndex(IndexKeys<Post>.Hashed(p => p.Permalink));
+
+			Post found = _posts.FindOne(Query<Post>.EQ(p => p.Permalink, permalink));
+			return found;
 		}
 
 		public IEnumerable<Post> FindByDateDescending(int limit)
 		{
-			return _posts.AsQueryable()
+			_posts.EnsureIndex(IndexKeys<Post>.Descending(p => p.Date));
+
+			IQueryable<Post> explainable = _posts.AsQueryable()
 				.OrderByDescending(p => p.Date)
 				.Take(limit);
+			
+			return explainable;
 		}
 
 		public string AddPost(string title, string body, string[] tags, string username)
@@ -46,10 +53,15 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 		public IEnumerable<Post> FindByTag(string tag, int limit)
 		{
-			return _posts.AsQueryable()
+			_posts.EnsureIndex(IndexKeys<Post>.Descending(p => p.Date));
+			_posts.EnsureIndex(IndexKeys<Post>.Ascending(p => p.Tags));
+
+			var explainable = _posts.AsQueryable()
 				.Where(p => p.Tags.Contains(tag))
 				.OrderByDescending(p => p.Date)
 				.Take(limit);
+
+			return explainable;
 		}
 	}
 }
