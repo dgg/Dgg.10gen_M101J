@@ -1,0 +1,20 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Home>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>My Blog</title>
+</head>
+	<body>
+		@Html.Partial("_authenticated.cshtml", Model)
+		<h1>My Blog</h1>
+		@foreach (var post in Model.myPosts)
+		{
+			<h2><a href="/posts/@post.Permalink">@post.Title</a></h2>
+			<span>Posted @post.Date <i>By @post.Author</i></span><br />
+			<span>@post.Comments.SafeLength()</span>
+			<hr/>
+			<p>@Html.Raw(post.Body)</p>
+			<p><em>Filed under: @Html.Partial("_tags.cshtml", post.Tags)</em></p>
+		}
+	</body>
+</html>

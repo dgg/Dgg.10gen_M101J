@@ -51,23 +51,30 @@
     <Reference Include="Nancy.Hosting.Aspnet">
       <HintPath>..\..\packages\Nancy.Hosting.Aspnet.0.18.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor">
+      <HintPath>..\..\packages\Nancy.Viewengines.Razor.0.18.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Razor.Unofficial">
+      <HintPath>..\..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\blog_template.html" />
-    <Content Include="Views\entry_template.html" />
+    <None Include="Views\blog_template.cshtml" />
+    <Content Include="Views\_tags.cshtml" />
+    <None Include="Views\_authenticated.cshtml" />
+    <None Include="Views\entry_template.cshtml" />
     <Content Include="Views\login.html" />
     <Content Include="Views\new_post.html" />
     <Content Include="Views\post_not_found.html" />
     <Content Include="Views\signup.html" />
     <Content Include="Views\welcome.html" />
-    <Content Include="Views\_authenticated.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +94,7 @@
     <Compile Include="SessionDao.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserDao.cs" />
+    <Compile Include="Models\HtmlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -123,6 +131,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+if $(ConfigurationName) == Debug (
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.18.0\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.18.0\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

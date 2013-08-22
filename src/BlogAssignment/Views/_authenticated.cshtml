@@ -1,0 +1,6 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Authenticated>
+
+@if (@Model.isLoggedIn)
+{
+	<p>Welcome @Model.username <a href="/logout">Logout</a> | <a href="/newpost">New Post</a></p>
+}

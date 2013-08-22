@@ -29,7 +29,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 					username = username,
 					myPosts = latestPosts
 				};
-				return View["blog_template.html", model];
+				return View["blog_template.cshtml", model];
 			};
 
 			Get["/signup"] = _ => View["signup.html", new Signup()];
@@ -111,7 +111,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 					username = username,
 					post = post
 				};
-				return View["entry_template.html", model];
+				return View["entry_template.cshtml", model];
 			};
 
 			Get["newpost"] = _ =>
@@ -157,7 +157,7 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				{
 					model.errors = "Post must contain your name and an actual comment";
 					var entry = new Entry { post = post, comment = model };
-					return View["entry_template.html", entry];
+					return View["entry_template.cshtml", entry];
 				}
 				
 				posts.AddComment(model.name, model.email, model.body, model.permalink);

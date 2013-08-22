@@ -36,12 +36,6 @@ namespace Dgg.tengen_M101J.BlogAssignment
 			return permalink;
 		}
 
-		[BsonIgnore]
-		public string AllTags
-		{
-			get { return string.Join(", ", Tags); }
-		}
-
 		private Post() { }
 		public static Post Empty()
 		{

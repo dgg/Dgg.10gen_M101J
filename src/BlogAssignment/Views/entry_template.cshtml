@@ -1,27 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Entry>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Blog Post</title>
 </head>
 	<body>
-		@Partial['_authenticated.html']
+		@Html.Partial("_authenticated.cshtml", Model)
 		<a href="/">Blog Home</a><br/><br/>
 		<h2>@Model.post.Title</h2>
 		Posted @Model.post.Date<i> By @Model.post.Author</i><br/>
 		<hr/>
 		<p>@Model.post.Body</p>
-		<p><em>Filed Under</em>: @Model.post.AllTags</p>
-		<p>Comments: @If.HasComments @Model.Comments.Length @EndIf @IfNot.HasComments 0 @EndIf</p>
+		<p><em>Filed Under</em>: @Html.Partial("_tags.cshtml", Model.post.Tags)</p>
+		<p>Comments: @Model.post.Comments.SafeLength()</p>
 		<ul>
-			@Each.post.Comments
-			<li>Author: @Current.Name<br/><br/>@Current.Body<br/><hr/>
-			</li>
-			@EndEach
+			@foreach (var comment in Model.post.Comments)
+			{
+				<li>Author: @comment.Author<br/><br/>@comment.Body<br/><hr/></li>
+			}
 		</ul>
 		<h3>Add a comment</h3>
 		<form action="/newcomment" method="POST">
 			<input type="hidden" name="permalink" value="@Model.post.Permalink"/>
-			@Model.comment.errors<br/>
+			<span class="error">@Model.comment.errors</span><br/>
 			<b>Name</b> (required)<br/>
 			<input type="text" name="name" size="60" value="@Model.comment.name"/><br/>
 			<b>Email</b> (optional)<br />
