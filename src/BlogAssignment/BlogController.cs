@@ -165,6 +165,18 @@ namespace Dgg.tengen_M101J.BlogAssignment
 			};
 
 			Get["post_not_found"] = _ => View["post_not_found.html"];
+
+			Get["/tags/{tag}"] = args =>
+			{
+				string username = extractUsername(sessions, Request);
+				var myPosts = posts.FindByTag(args.tag, 10);
+				var model = new Home
+				{
+					username = username,
+					myPosts = myPosts
+				};
+				return View["blog_template.cshtml", model];
+			};
 		}
 
 		private static string extractUsername(SessionDao sessions, Request request)

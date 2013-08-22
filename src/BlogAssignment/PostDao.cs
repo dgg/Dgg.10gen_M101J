@@ -43,5 +43,13 @@ namespace Dgg.tengen_M101J.BlogAssignment
 			_posts.Update(Query<Post>.EQ(p => p.Permalink, permalink),
 				Update<Post>.Push(p => p.Comments, toBeAdded));
 		}
+
+		public IEnumerable<Post> FindByTag(string tag, int limit)
+		{
+			return _posts.AsQueryable()
+				.Where(p => p.Tags.Contains(tag))
+				.OrderByDescending(p => p.Date)
+				.Take(limit);
+		}
 	}
 }
