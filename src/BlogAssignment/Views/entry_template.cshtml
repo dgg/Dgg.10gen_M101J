@@ -14,9 +14,17 @@
 		<p><em>Filed Under</em>: @Html.Partial("_tags.cshtml", Model.post.Tags)</p>
 		<p>Comments: @Model.post.Comments.SafeLength()</p>
 		<ul>
-			@foreach (var comment in Model.post.Comments)
+			@for (int i = 0; i < Model.post.Comments.Length; i++ )
 			{
-				<li>Author: @comment.Author<br/><br/>@comment.Body<br/><hr/></li>
+				<li>
+					<form action="/like" method="POST">
+						<input type="hidden" name="permalink" value="@Model.post.Permalink"/>
+						<input type="hidden" name="comment_ordinal" value="@i" />
+						Author: @Model.post.Comments[i].Author<br/>
+						Likes: @Model.post.Comments[i].num_likes <input type="submit" value="Like"/>
+					</form>
+					<br/>@Model.post.Comments[i].Body<br/><hr/>
+				</li>
 			}
 		</ul>
 		<h3>Add a comment</h3>

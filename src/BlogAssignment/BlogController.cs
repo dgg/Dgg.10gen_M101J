@@ -177,6 +177,15 @@ namespace Dgg.tengen_M101J.BlogAssignment
 				};
 				return View["blog_template.cshtml", model];
 			};
+
+			Post["/like"] = _ =>
+			{
+				var model = this.Bind<Like>();
+				posts.Like(model.permalink, model.comment_ordinal);
+
+
+				return Response.AsRedirect("/posts/" + model.permalink);
+			};
 		}
 
 		private static string extractUsername(SessionDao sessions, Request request)

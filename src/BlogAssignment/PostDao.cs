@@ -63,5 +63,11 @@ namespace Dgg.tengen_M101J.BlogAssignment
 
 			return explainable;
 		}
+
+		public void Like(string permalink, int commentIndex)
+		{
+			_posts.Update(Query<Post>.EQ(p => p.Permalink, permalink),
+				Update<Post>.Inc(p => p.Comments[commentIndex].num_likes, 1));
+		}
 	}
 }
